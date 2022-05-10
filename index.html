@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>WebRTC: QR Code Scanner</title>
+  <meta charset="utf-8" />
+  <link rel="stylesheet" href="main.css" type="text/css" media="all" />
+  <base href="https://davidgariba.github.io/INFO6128-Lab3/">
+  </base>
+  <link rel="stylesheet" href="https://unpkg.com/onsenui@2.11.2/css/onsenui-core.min.css" />
+  <link rel="stylesheet" href="https://unpkg.com/onsenui@2.11.2/css/onsenui.min.css" />
+  <link rel="stylesheet" href="./components/onsen-css-components.min.css">
+  <!-- <link rel="stylesheet" href="https://unpkg.com/onsenui@2.11.2/css/onsen-css-components.min.css" /> -->
+  <link rel="manifest" href="manifest.json" />
+</head>
+
+<body>
+  <ons-navigator swipeable id="navigator" page="index.html"></ons-navigator>
+  <template id="index.html">
+    <ons-page id="home">
+      <ons-toolbar>
+        <div class="center">QR Code Scanner</div>
+      </ons-toolbar>
+      <div class="container">
+        <div class="camera-container">
+          <div class="animate-switch"></div>
+          <ons-fab id="download">
+            <ons-icon icon="md-download"></ons-icon>
+          </ons-fab>
+          <ons-fab id="switch-camera">
+            <ons-icon icon="md-camera-switch"></ons-icon>
+          </ons-fab>
+          <div class="camera">
+            <video id="video" autoplay>Video stream not available.</video>
+          </div>
+          <div class="output">
+            <img id="photo" alt="The screen capture will appear in this box." />
+          </div>
+          <ons-button modifier="large" id="start">Take Photo</ons-button>
+          <ons-button modifier="outline large" id="restart">Try Again</ons-button>
+        </div>
+        <canvas id="canvas"></canvas>
+      </div>
+    </ons-page>
+  </template>
+</body>
+<script type="text/javascript">
+  const registerSW = async () => {
+    if ('serviceWorker' in navigator) {
+      try {
+        await navigator.serviceWorker.register(`${window.location.href}sw.js`);
+        console.log('Service Worker Registered');
+      } catch (e) {
+        console.error('Error registering Service Worker...', e);
+      }
+    }
+  };
+  registerSW();
+</script>
+<script src="https://unpkg.com/onsenui@2.11.2/js/onsenui.min.js"></script>
+<script src="capture.js"></script>
+
+</html>
